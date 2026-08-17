@@ -14,8 +14,8 @@ public final class PayloadService {
         byte[] encoded = payload.getBytes(StandardCharsets.UTF_8);
         ByteBuffer buffer = ByteBuffer.allocate(encoded.length);
         buffer.put(encoded);
+        buffer.flip();
 
-        // BUG: the buffer is still in write mode. Reading starts at position == limit.
         byte[] readable = new byte[buffer.remaining()];
         buffer.get(readable);
         String normalized = new String(readable, StandardCharsets.UTF_8);
